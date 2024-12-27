@@ -45,7 +45,7 @@ export default function Modal({
                 <Dialog.Panel className="w-full max-w-md p-6 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
                   <Dialog.Title
                     as="h3"
-                    className="text-lg font-medium leading-6 text-gray-900"
+                    className="mb-5 text-lg font-medium leading-6 text-gray-900"
                   >
                     {title}
                   </Dialog.Title>
