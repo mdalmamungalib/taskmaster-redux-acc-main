@@ -1,6 +1,8 @@
 import React from "react";
 import Modal from "../ui/Modal/Modal";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { addTask } from "../../redux/features/tasks/tasksSlice";
 
 const AddTaskModal = ({ isOpen, setIsOpen, title }) => {
   const {
@@ -8,8 +10,10 @@ const AddTaskModal = ({ isOpen, setIsOpen, title }) => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const dispatch = useDispatch();
 
   const onSubmit = (data) => {
+    dispatch(addTask(data));
     console.log("Form Data Submitted:", data);
     setIsOpen(false); // Close the modal after submission
   };
@@ -44,25 +48,41 @@ const AddTaskModal = ({ isOpen, setIsOpen, title }) => {
   ];
 
   return (
-    <Modal isOpen={isOpen} setIsOpen={setIsOpen} title={title || "Add Task"}>
+    <Modal
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
+      title={title || "Add Task"}
+    >
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* Title */}
         <div className="flex flex-col mb-5">
-          <label htmlFor="title" className="mb-2 font-medium text-gray-700">
+          <label
+            htmlFor="title"
+            className="mb-2 font-medium text-gray-700"
+          >
             Title
           </label>
           <input
             type="text"
             id="title"
-            {...register("title", { required: "Title is required" })}
+            {...register("title", {
+              required: "Title is required",
+            })}
             className="w-full p-2 border rounded-md"
           />
-          {errors.title && <p className="text-sm text-red-600">{errors.title.message}</p>}
+          {errors.title && (
+            <p className="text-sm text-red-600">
+              {errors.title.message}
+            </p>
+          )}
         </div>
 
         {/* Description */}
         <div className="flex flex-col mb-5">
-          <label htmlFor="description" className="mb-2 font-medium text-gray-700">
+          <label
+            htmlFor="description"
+            className="mb-2 font-medium text-gray-700"
+          >
             Description
           </label>
           <textarea
@@ -74,24 +94,39 @@ const AddTaskModal = ({ isOpen, setIsOpen, title }) => {
 
         {/* Dateline */}
         <div className="flex flex-col mb-5">
-          <label htmlFor="dateline" className="mb-2 font-medium text-gray-700">
+          <label
+            htmlFor="dateline"
+            className="mb-2 font-medium text-gray-700"
+          >
             Dateline
           </label>
           <input
             type="date"
             id="dateline"
-            {...register("dateline", { required: "Dateline is required" })}
+            {...register("dateline", {
+              required: "Dateline is required",
+            })}
             className="w-full p-2 border rounded-md"
           />
-          {errors.dateline && <p className="text-sm text-red-600">{errors.dateline.message}</p>}
+          {errors.dateline && (
+            <p className="text-sm text-red-600">
+              {errors.dateline.message}
+            </p>
+          )}
         </div>
 
         {/* Assign to */}
         <div className="flex flex-col mb-5">
-          <label htmlFor="assignTo" className="mb-2 font-medium text-gray-700">
+          <label
+            htmlFor="assignTo"
+            className="mb-2 font-medium text-gray-700"
+          >
             Assign to
           </label>
-          <select {...register("assignTo")} className="w-full p-2 border rounded-md">
+          <select
+            {...register("assignTo")}
+            className="w-full p-2 border rounded-md"
+          >
             {assign.map((item) => (
               <option key={item.id} value={item.name}>
                 {item.name}
@@ -102,10 +137,16 @@ const AddTaskModal = ({ isOpen, setIsOpen, title }) => {
 
         {/* Priority */}
         <div className="flex flex-col mb-5">
-          <label htmlFor="priority" className="mb-2 font-medium text-gray-700">
+          <label
+            htmlFor="priority"
+            className="mb-2 font-medium text-gray-700"
+          >
             Priority
           </label>
-          <select {...register("priority")} className="w-full p-2 border rounded-md">
+          <select
+            {...register("priority")}
+            className="w-full p-2 border rounded-md"
+          >
             {priority.map((item) => (
               <option key={item.id} value={item.name}>
                 {item.name}
@@ -123,7 +164,10 @@ const AddTaskModal = ({ isOpen, setIsOpen, title }) => {
           >
             Cancel
           </button>
-          <button type="submit" className="p-2 text-white bg-blue-600 rounded-md">
+          <button
+            type="submit"
+            className="p-2 text-white bg-blue-600 rounded-md"
+          >
             Submit
           </button>
         </div>
